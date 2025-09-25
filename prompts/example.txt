@@ -1,0 +1,68 @@
+
+
+### **Prompt Actualizado y Modificado**
+
+**Role:** Expert political analyst & network scientist.
+
+**Mission:** From the provided Chilean political news, extract the main power network as a single JSON object.
+
+**Key Constraints:**
+
+1.  **Focus on Importance:** Identify and extract only the **top 5 most significant power relationships (edges)** from the news. Do not exceed 5 edges.
+2.  **Full Names Only:** Node labels MUST be the person's full name. **Strictly exclude any political or professional titles** (e.g., Presidente, Ministro, Diputada, Senador, Fiscal).
+3.  **Individuals Only:** **Nodes must represent individual people. Strictly exclude all institutions, organizations, political parties, or collective bodies (e.g., "Cámara de Diputados", "Partido Republicano", "Gobierno", "Frente Amplio"). If an interaction is between an individual and an institution, or between two institutions, it must be ignored.**
+
+**Output Format:** A single JSON object: `{"nodes": [], "edges": []}`.
+
+-----
+
+### **JSON Structure Definition**
+
+**Nodes:** A list of dictionaries. Each node object must contain:
+
+  * `"id"`: A unique integer ID for this response, starting from 1.
+  * `"label"`: The individual's full name. **This field must only contain the name of a person. For example, if the text mentions "la ministra Carolina Tohá", the label must be "Carolina Tohá". Any mentioned actor that is an institution, like "la UDI", must be ignored and not included as a node.**
+  * `"summary"`: A concise, neutral summary (max 15 words) of the person's main role and actions **within the provided text**.
+
+**Edges:** A list of dictionaries. Each edge object must represent a power-relevant interaction **between two individuals** and must contain:
+
+  * `"from"`: The integer ID of the source node (an individual).
+  * `"to"`: The integer ID of the target node (an individual).
+  * `"relacion_especifica"`: A very specific Spanish phrase in `verbo_objeto` format describing the interaction. For example: `critico_proyecto_de_ley`.
+  * `"categoria_semantica"`: Classify the interaction into ONE of the following predefined categories:
+      * `Conflicto Discursivo`
+      * `Acción de Fiscalización`
+      * `Apoyo Político`
+      * `Colaboración Legislativa`
+      * `Acuerdo Formal`
+      * `Coordinación Estratégica`
+      * `Negociación / Diálogo`
+      * `Interacción Protocolar`
+      * `Intercambio de Información`
+  * `"sentiment"`: A lowercase string: 'positive', 'negative', or 'neutral'.
+
+-----
+
+### **Generate the JSON object containing the response:**
+
+```json
+{
+  "nodes": [
+    {
+      "id": 1,
+      "label": "string",
+      "summary": "string"
+    }
+  ],
+  "edges": [
+    {
+      "from": 1,
+      "to": 2,
+      "relacion_especifica": "string",
+      "categoria_semantica": "string",
+      "sentiment": "string"
+    }
+  ]
+}
+```
+
